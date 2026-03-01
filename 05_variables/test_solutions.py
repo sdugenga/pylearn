@@ -2,8 +2,11 @@ import pytest
 
 from solutions import (
     get_type_name,
+    is_none,
     same_type,
     is_truthy,
+    compare_identity,
+    mutability_comparison,
 )
 
 
@@ -65,3 +68,35 @@ class TestTruthy:
 
     def test_list(self):
         assert is_truthy([0]) == True
+
+
+class TestCompareValues:
+
+    def test_large_integer(self):
+        a = [1, 2, 3]
+        b = [1, 2, 3]
+        assert compare_identity(a, b) == (True, False, False)
+
+    def test_small_integer(self):
+        assert compare_identity(10, 10) == (True, True, True)
+
+
+class TestIsNone:
+
+    def test_none(self):
+        assert is_none(None) == True
+
+    def test_number(self):
+        assert is_none(0) == False
+
+    def test_bool(self):
+        assert is_none(False) == False
+
+    def test_empty_string(self):
+        assert is_none("") == False
+
+
+class TestMutabilityComparison:
+
+    def test_mutability_comparison(self):
+        assert mutability_comparison() == (False, True)
