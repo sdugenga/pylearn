@@ -2,7 +2,8 @@ import pytest
 
 from solutions import (
     get_type_name,
-    same_type
+    same_type,
+    is_truthy,
 )
 
 
@@ -40,3 +41,27 @@ class TestSameType:
 
     def test_bool_and_bool(self):
         assert same_type(False, True) == True
+
+
+class TestTruthy:
+
+    def test_zero(self):
+        assert is_truthy(0) == False
+
+    def test_one(self):
+        assert is_truthy(1) == True
+
+    def test_empty_string(self):
+        assert is_truthy("") == False
+
+    def test_string(self):
+        assert is_truthy("Hello, World!") == True
+
+    def test_none(self):
+        assert is_truthy(None) == False
+
+    def test_empty_list(self):
+        assert is_truthy([]) == False
+
+    def test_list(self):
+        assert is_truthy([0]) == True
