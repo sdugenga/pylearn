@@ -7,6 +7,12 @@ from solutions import (
     is_truthy,
     compare_identity,
     mutability_comparison,
+    shallow_copy_list,
+    deep_copy_list,
+    to_int,
+    to_safe_string,
+    local_scope_demo,
+    make_greeting,
 )
 
 
@@ -100,3 +106,75 @@ class TestMutabilityComparison:
 
     def test_mutability_comparison(self):
         assert mutability_comparison() == (False, True)
+
+
+class TestShallowCopyList:
+
+    def test_shallow_copy_list(self):
+        lst = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        new_lst = shallow_copy_list(lst)
+        new_lst[1][1] = 50
+        assert lst[1][1] == 50
+
+class TestDeepCopyList:
+
+    def test_deep_copy_list(self):
+        lst = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        new_lst = deep_copy_list(lst)
+        new_lst[1][1] = 50
+        assert lst[1][1] == 5
+
+
+class TestToInt:
+
+    def test_valid_string(self):
+        assert to_int("42") == 42
+
+    def test_valid_float(self):
+        assert to_int(3.9) == 3
+
+    def test_invalid_string(self):
+        with pytest.raises(ValueError):
+            to_int("Hello, World!")
+
+    def test_none_raises(self):
+        with pytest.raises(ValueError):
+            to_int(None)
+
+    def test_error_message(self):
+        with pytest.raises(ValueError, match="Cannot convert"):
+            to_int("Hello, World!")
+
+
+class TestToSafeString:
+
+    def test_integer(self):
+        assert to_safe_string(42) == "42"
+
+    def test_none_type(self):
+        assert to_safe_string(None) == "null"
+
+    def test_boolean(self):
+        assert to_safe_string(True) == "True"
+
+    def test_float(self):
+        assert to_safe_string(3.14) == "3.14"
+
+    def test_list(self):
+        assert to_safe_string([1, 2, 3]) == "[1, 2, 3]"
+
+
+class TestLocalScopeDemo:
+        
+    def test_local_scope(self):
+        assert local_scope_demo() == "Hello, World!"
+
+        with pytest.raises(NameError):
+            message
+
+
+class TestMakeGreeting:
+
+    def test_alice(self):
+        hello = make_greeting("Hello")
+        assert hello("Alice") == "Hello, Alice!"
