@@ -7,6 +7,9 @@ TODO: Typical usage example:
     inspector(object)
 """
 
+import sys
+
+
 def main():
     pass
 
@@ -25,10 +28,17 @@ def get_identity(obj: Any) -> dict:
     """
     pass
     # TODO: Get name of obj (is the name passed to the function. Is it always)?
-    # TODO: Get value of obj.
-    # TODO: Get Address of obj.
-    # TODO: Get refcount of obj.
-    # TODO: Get size of obj.
+    # TODO: Get value of obj. 
+    # TODO: Get Address of obj. id(obj)
+    # TODO: Get refcount of obj. sys.getrefcount(obj)
+    # TODO: Get size of obj. sys.getsizeof()
+    # return {
+            # 'name': '#notsure',
+            # 'value': 'obj',
+            # 'id': 'id(obj)',
+            # 'ref_count': 'sys.getrefcount(obj)',
+            # 'size': 'sys.getsizeof(obj)'
+            }
 
 
 if __name__ == "__main__":
