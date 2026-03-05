@@ -25,3 +25,10 @@ class TestParamGetIdentity:
         assert isinstance(test_dict['ref_count'], int) and test_dict['ref_count'] > 0
         assert isinstance(test_dict['size'], int) and test_dict['size'] > 0
 
+
+class TestGetTypeInfo:
+
+    # TODO: Test mutability for two immutable types.
+    # TODO: Test mutability for two mutable types.
+    # TODO: Test hierarchy for bool ('bool', 'int', 'object').
+    # TODO: Test that object always appears as last item in hierarchy (-1).
