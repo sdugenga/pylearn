@@ -38,14 +38,14 @@ def get_type_info(obj: Any) -> dict:
 
             type: The name of type of the object as a string (e.g 'str')
 
-            mutable: Whether the object type is mutable or not (e.g. 'yes')
+            mutable: Whether the object type is mutable or not (e.g. 'True')
 
             hierarchy: The type hierarchy of the object as a list from most specific
             to most general (e.g. [int, object]). Retrieved from __mro__ attribute
             which gives a tuple of the object type, or it's method resolution order.
     """
     # No error cases as internal function.
-    obj_type = type(object).__name__ # Get object type name as a string.
+    obj_type = type(obj).__name__ # Get object type name as a string.
     
     # Check if object type is in set of immutable types:
     immutable_types =   {
@@ -62,7 +62,7 @@ def get_type_info(obj: Any) -> dict:
 
     return {'type': obj_type,
             'mutable': obj_type not in immutable_types,
-            'hierarchy': [t for t in type(obj).__mro__]
+            'hierarchy': [t.__name__ for t in type(obj).__mro__]
             }
 
 
