@@ -66,6 +66,19 @@ def get_type_info(obj: Any) -> dict:
             }
 
 
+def format_address(address: int) -> str:
+    """ Take memory address as an integer and return decimal and hexidecimal 
+    representations.
+
+    Raises:
+        ValueError if address is not a non-zero positive integer.
+    """
+    if not isinstance(address, int) or address <= 0:
+        raise ValueError("Address is not a positive integer.")
+
+
+    pass
+
 if __name__ == "__main__":
     main()
 
