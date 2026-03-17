@@ -3,6 +3,7 @@ import pytest
 from inspector import (
         get_identity,
         get_type_info,
+        format_address
         )
 
 
@@ -53,3 +54,14 @@ class TestGetTypeInfo:
     def test_hierarchy_object(self, obj):
         test_type_dict = get_type_info(obj)
         assert test_type_dict['hierarchy'][-1] == 'object'
+
+
+class TestFormatAddress:
+
+    def test_positive_integer(self):
+        assert format_address(140153875566800) == "0x7f781df790d0 (140153875566800)"
+
+    @pytest.mark.parametrize("obj", [-1, 0, True, 3.14, "Hello, World!"])
+    def test_error_raising(self, obj):
+        with pytest.raises(ValueError, match="positive integer"):
+            format_address(obj)

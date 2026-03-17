@@ -73,11 +73,10 @@ def format_address(address: int) -> str:
     Raises:
         ValueError if address is not a non-zero positive integer.
     """
-    if not isinstance(address, int) or address <= 0:
+    if not isinstance(address, int) or isinstance(address, bool) or address <= 0:
         raise ValueError("Address is not a positive integer.")
 
-
-    pass
+    return f"{hex(address)} ({address})"
 
 if __name__ == "__main__":
     main()
