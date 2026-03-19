@@ -9,6 +9,8 @@ TODO: Typical usage example:
 
 import sys
 
+from typing import Any
+
 
 def main():
     pass
