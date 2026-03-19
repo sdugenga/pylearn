@@ -78,6 +78,17 @@ def format_address(address: int) -> str:
 
     return f"{hex(address)} ({address})"
 
+
+def display_inspection(name: str, identity: dict, type_info: dict) -> None:
+    """Take information about an object and display it in a pretty format.
+
+    Function only displays information and does not compute or return any information.
+
+    Raises: TypeError if identity or type_info are not dicts.
+            ValueError if required keys are missing from either dict.
+    """
+    pass
+
+
 if __name__ == "__main__":
     main()
-
