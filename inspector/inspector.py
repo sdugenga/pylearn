@@ -17,6 +17,9 @@ from typing import Any
 
 # TODO(Ch06): Replace chain display with tree display after covering recursion properly.
 # TODO: Add a little explainer about the name thing and that you should provide one.
+# TODO: README.md
+# TODO: Coercion preview.
+# TODO: Proper testing of the final product.
 
 IMMORTAL_SENTINEL = 0xC0000000
 console = Console()
