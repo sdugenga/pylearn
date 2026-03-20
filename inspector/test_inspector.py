@@ -7,7 +7,8 @@ from inspector import (
         get_identity,
         get_type_info,
         format_address,
-        display_inspection
+        display_inspection,
+        object_inspect
         )
 
 
@@ -111,3 +112,11 @@ class TestDisplayInspection:
         display_inspection("x", self.valid_id_dict, self.valid_type_dict, test_console)
         output = buffer.getvalue()
         assert len(output) > 0
+
+class TestObjectInspect:
+
+    def test_runs_without_error(self):
+        try:
+            object_inspect(42, "x")
+        except Exception as e:
+            pytest.fail(f"object_inspect raised an exception: {e}")

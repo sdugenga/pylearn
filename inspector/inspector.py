@@ -16,6 +16,7 @@ from rich.text import Text
 from typing import Any
 
 # TODO(Ch06): Replace chain display with tree display after covering recursion properly.
+# TODO: Add a little explainer about the name thing and that you should provide one.
 
 IMMORTAL_SENTINEL = 0xC0000000
 console = Console()
@@ -35,7 +36,11 @@ def get_identity(obj: Any) -> dict:
             size: the size of the object in bytes.
     """
     # No error cases as internal function.
-    return {"id": id(obj), "ref_count": sys.getrefcount(obj), "size": obj.__sizeof__()}
+    return {
+        "id": id(obj),
+        "ref_count": sys.getrefcount(obj),
+        "size": sys.getsizeof(obj)
+        }
 
 
 def get_type_info(obj: Any) -> dict:
@@ -195,6 +200,29 @@ def display_inspection(
             padding=(1, 0, 1, 1),
         )
     )
+
+
+def object_inspect(obj: Any, name: str = "?") -> None:
+    """Inspect and display the identity and type properties of any Python object.
+
+    Gathers identity information (memory address, reference count, size) and
+    type information (type name, mutability, hierarchy) and displays them in
+    a formatted panel.
+
+    Args:
+        obj: Any Python object to inspect.
+        name: The name of the variable as it appears in the calling code.
+              Cannot be determined automatically — must be supplied by the
+              caller. Defaults to "?" if not provided.
+
+    Example:
+        >>> x = 42
+        >>> object_inspect(x, name="x")
+        # displays formatted panel showing identity and type info for x
+    """
+    identity = get_identity(obj)
+    type_info = get_type_info(obj)
+    display_inspection(name, identity, type_info)
 
 
 if __name__ == "__main__":
