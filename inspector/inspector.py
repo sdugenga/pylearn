@@ -75,7 +75,7 @@ def get_type_info(obj: Any) -> dict:
     }
 
 
-def format_address(address: int) -> str:
+def format_address(address: int) -> dict:
     """Take memory address as an integer and return decimal and hexidecimal
     representations.
 
@@ -88,7 +88,12 @@ def format_address(address: int) -> str:
     return {"hex": f"{hex(address)}", "dec": f"{address}"}
 
 
-def display_inspection(name: str, identity: dict, type_info: dict) -> None:
+def display_inspection(
+    name: str,
+    identity: dict,
+    type_info: dict,
+    console: Console = console
+    ) -> None:
     """Take information about an object and display it in a pretty format.
 
     Function only displays information and does not compute or return any information.
@@ -96,7 +101,27 @@ def display_inspection(name: str, identity: dict, type_info: dict) -> None:
     Raises: TypeError if identity or type_info are not dicts.
             ValueError if required keys are missing from either dict.
     """
-    ref_count = identity["ref_count"]
+    # Error checking
+    if not isinstance(identity, dict):
+        raise TypeError("Identity information must be in dict format.")
+    if not isinstance(type_info, dict):
+        raise TypeError("Type information must be in dict format.")
+
+    expected_type_keys = {"type", "mutable", "hierarchy"}
+    actual_type_keys = set(type_info.keys())
+    missing_type_keys = expected_type_keys - actual_type_keys
+
+    if missing_type_keys:
+        raise ValueError(f"Missing keys in type dict: {missing_type_keys}")
+
+    expected_id_keys = {"id", "ref_count", "size"}
+    actual_id_keys = set(identity.keys())
+    missing_id_keys = expected_id_keys - actual_id_keys
+
+    if missing_id_keys:
+        raise ValueError(f"Missing keys in identity dict: {missing_id_keys}")
+
+    ref_count = str(identity["ref_count"])
 
     # Check if cached or immortal value and format
     if identity["ref_count"] == IMMORTAL_SENTINEL:
@@ -148,7 +173,7 @@ def display_inspection(name: str, identity: dict, type_info: dict) -> None:
     id_table.add_column(justify="right", style="bold")
     id_table.add_column(justify="left")
 
-    id_table.add_row("Reference Count:", str(ref_count))
+    id_table.add_row("Reference Count:", ref_count)
     id_table.add_row("Size:", f"{identity['size']} B")
     id_table.add_row(
         "ID:",
